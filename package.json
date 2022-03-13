@@ -1,0 +1,39 @@
+{
+  "name": "admin_panel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HKudria/admin_panel.git"
+  },
+  "author": "",
+  "browserslist": [
+    "last 2 chrome version",
+    "last 2 firefox versions",
+    "last 2 ios versions"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HKudria/admin_panel/issues"
+  },
+  "homepage": "https://github.com/HKudria/admin_panel#readme",
+  "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "core-js": "^3.21.1",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "jquery": "^3.6.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-stream": "^7.0.0"
+  },
+  "devDependencies": {
+    "sass": "^1.49.9"
+  }
+}

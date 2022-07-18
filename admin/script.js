@@ -10971,8 +10971,32 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+ //$("h1").fadeOut();
+//parse array from php api using foreach in jquery
+//show all html file from site catalog
 
-jquery__WEBPACK_IMPORTED_MODULE_0___default()("h1").fadeOut();
+function getPageList() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()("h1").remove();
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().get("./api", data => {
+    data.forEach(file => {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()("body").append(`<h1>${file}</h1>`);
+    });
+  }, "JSON");
+} //call function to show all html pages
+
+
+getPageList(); //search button on page and processed click
+//when button was pushed down we send request to php page and check if page is exist else create new page
+
+jquery__WEBPACK_IMPORTED_MODULE_0___default()("button").click(() => {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().post("./api/createNewPage.php", {
+    "name": jquery__WEBPACK_IMPORTED_MODULE_0___default()("input").val()
+  }, () => {
+    getPageList();
+  }).fail(() => {
+    alert("The page already exists!");
+  });
+});
 })();
 
 /******/ })()

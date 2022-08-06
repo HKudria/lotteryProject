@@ -25,6 +25,7 @@
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "axios": "^0.27.2",
     "babel-loader": "^8.2.3",
     "core-js": "^3.21.1",
     "gulp": "^4.0.2",
@@ -34,6 +35,8 @@
     "webpack-stream": "^7.0.0"
   },
   "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.49.9"
   }
 }

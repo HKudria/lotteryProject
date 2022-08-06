@@ -23,51 +23,107 @@ export default class Editor extends Component {
         this.loadPageList();
     }
 
-    open(page){
-        this.currentPage = `../${page}`;
-        this.iframe.load(this.currentPage,()=>{
-            const body = this.iframe.contentDocument.body;
-            let textNodes = [];
-            const findAllTextElement = (element) => {
-                element.childNodes.forEach(node => {
-                    if(node.nodeName === "#text" && node.nodeValue.replace(/\s+/g, "").length>0) {
-                        textNodes.push(node)
-                    } else {
-                        findAllTextElement(node)
-                    }
-                })
-            }
-
-            findAllTextElement(body)
-
-            textNodes.forEach(node => {
-               const wrapper = this.iframe.contentDocument.createElement('text-editor');
-               node.parentNode.replaceChild(wrapper, node);
-               wrapper.appendChild(node);
-               wrapper.contentEditable = "true";
-            });
-
-            }
-        )
+    open(page) {
+        this.currentPage = page;
+        axios
+            .get(`../${page}?rnd=${Math.random()}`)
+            .then(res => this.parseStrToDOM(res.data))
+            .then(this.wrapTextNodes)
+            .then(dom => {
+                this.virtualDom = dom;
+                return dom;
+            })
+            .then(this.serializedDOMtoString)
+            .then(html => axios.post("./api/saveTempPage.php", {html}))
+            .then(() => this.iframe.load("../temp.html"))
+            .then(() => this.enableEditing())
     }
-    loadPageList(){
+
+    save() {
+        const newDom = this.virtualDom.cloneNode(this.virtualDom);
+        this.unwrapTextNodes(newDom);
+        const html = this.serializedDOMtoString(newDom);
+        axios
+            .post("./api/savepage.php",{pageName: this.currentPage, html})
+    }
+
+    enableEditing() {
+        this.iframe.contentDocument.body.querySelectorAll("text-editor").forEach(element => {
+            element.contentEditable = "true";
+            element.addEventListener("input", () => {
+                this.onTextEdit(element);
+            })
+        });
+    }
+
+    onTextEdit(element){
+        const id = element.getAttribute("nodeid");
+        this.virtualDom.body.querySelector(`[nodeid="${id}"]`).innerHTML = element.innerHTML;
+    }
+
+    loadPageList() {
         axios
             .get("./api")
             .then(res => this.setState({pageList: res.data}))
+    }
+
+    wrapTextNodes(dom) {
+        const body = dom.body;
+        let textNodes = [];
+        const findAllTextElement = (element) => {
+            element.childNodes.forEach(node => {
+                if (node.nodeName === "#text" && node.nodeValue.replace(/\s+/g, "").length > 0) {
+                    textNodes.push(node)
+                } else {
+                    findAllTextElement(node)
+                }
+            })
+        }
+
+        findAllTextElement(body)
+
+        textNodes.forEach((node, index) => {
+            const wrapper = dom.createElement("text-editor");
+            node.parentNode.replaceChild(wrapper, node);
+            wrapper.appendChild(node);
+            wrapper.setAttribute("nodeId", index);
+        });
+
+        return dom
+    }
+
+    unwrapTextNodes(dom){
+        dom.body.querySelectorAll("text-editor").forEach(element => {
+            element.parentNode.replaceChild(element.firstChild, element);
+        })
+    }
+
+    serializedDOMtoString(dom) {
+        const serializer = new XMLSerializer();
+        return serializer.serializeToString(dom);
+    }
+
+    parseStrToDOM(str) {
+        const parser = new DOMParser();
+        return parser.parseFromString(str, "text/html");
     }
 
     createNewPage() {
         axios
             .post("./api/createNewPage.php", {"name": this.state.newPageName})
             .then(this.loadPageList())
-            .catch(()=>{alert('page is exist!')});
+            .catch(() => {
+                alert('page is exist!')
+            });
     }
 
-    deletePage(page){
+    deletePage(page) {
         axios
             .post("./api/deletePage.php", {"name": page})
             .then(this.loadPageList())
-            .catch(()=>{alert('page isn\'t exist!')});
+            .catch(() => {
+                alert('page isn\'t exist!')
+            });
     }
 
     render() {
@@ -81,7 +137,10 @@ export default class Editor extends Component {
         //     )
         // })
         return (
+            <>
+                <button onClick={() => this.save()}>click</button>
             <iframe src={this.currentPage} frameBorder="0"/>
+            </>
             // <>
             //     <input
             //         onChange={(e)=> {this.setState({newPageName: e.target.value})}}

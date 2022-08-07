@@ -7,6 +7,7 @@ import UIkit from 'uikit';
 import Spinner from "../spinner";
 import ConfirmModal from "../confirm-modal";
 import ChooseModal from "../choose-modal";
+import Panel from "../panel";
 
 export default class Editor extends Component {
     constructor() {
@@ -14,6 +15,7 @@ export default class Editor extends Component {
         this.currentPage = 'index.html';
         this.state = {
             pageList: [],
+            backupsList: [],
             newPageName: "",
             loading: true
         }
@@ -29,13 +31,14 @@ export default class Editor extends Component {
     }
 
     init(e, page) {
-        if(e){
+        if (e) {
             e.preventDefault();
         }
         this.isLoading();
         this.iframe = document.querySelector('iframe');
         this.open(page, this.isLoaded);
         this.loadPageList();
+        this.loadBackupList();
     }
 
     open(page, cb) {
@@ -56,18 +59,22 @@ export default class Editor extends Component {
             .then(() => this.enableEditing())
             .then(() => this.injectStyles())
             .then(cb);
+
+        this.loadBackupList();
     }
 
-    save(onSuccess, onError) {
+    async save(onSuccess, onError) {
         this.isLoading()
         const newDom = this.virtualDom.cloneNode(this.virtualDom);
         DOMHelper.unwrapTextNodes(newDom);
         const html = DOMHelper.serializedDOMtoString(newDom);
-        axios
+        await axios
             .post("./api/savepage.php", {pageName: this.currentPage, html})
             .then(onSuccess)
             .catch(onError)
             .finally(this.isLoaded);
+
+        this.loadBackupList();
     }
 
     enableEditing() {
@@ -98,6 +105,16 @@ export default class Editor extends Component {
         axios
             .get("./api/pageList.php")
             .then(res => this.setState({pageList: res.data}))
+    }
+
+    loadBackupList() {
+        axios
+            .get("./backups/backups.json")
+            .then(res => this.setState({
+                backupsList: res.data.filter(backup => {
+                    return backup.page === this.currentPage
+                })
+            }))
     }
 
     createNewPage() {
@@ -132,24 +149,22 @@ export default class Editor extends Component {
 
 
     render() {
-        const {loading, pageList} = this.state;
+        const {loading, pageList, backupsList} = this.state;
         let spinner;
 
-        loading ? spinner = <Spinner active/> : spinner = <Spinner />
-
+        loading ? spinner = <Spinner active/> : spinner = <Spinner/>
+        console.log(backupsList)
         return (
             <>
-                <iframe src={this.currentPage} frameBorder="0"/>
+                <iframe src="" frameBorder="0"/>
 
                 {spinner}
+                <Panel/>
 
-                <div className="panel">
-                    <button className="uk-button uk-button-primary uk-margin-small-right" uk-toggle="target: #modal-open">Open</button>
-                    <button className="uk-button uk-button-primary" uk-toggle="target: #modal-save">Save</button>
-                </div>
 
-                <ConfirmModal target={'modal-save'} method={this.save} />
+                <ConfirmModal target={'modal-save'} method={this.save}/>
                 <ChooseModal target={'modal-open'} data={pageList} redirect={this.init}/>
+                <ChooseModal target={'modal-backup'} data={backupsList} redirect={this.init}/>
 
             </>
         );

@@ -1,45 +1,43 @@
 export default class DOMHelper {
 
-    static parseStrToDOM(str) {
-        const parser = new DOMParser();
-        return parser.parseFromString(str, "text/html");
-    }
-
     static wrapTextNodes(dom) {
         const body = dom.body;
         let textNodes = [];
-
-        function recursy(element) {
+        const findAllTextElement = (element) => {
             element.childNodes.forEach(node => {
-
-                if(node.nodeName === "#text" && node.nodeValue.replace(/\s+/g, "").length > 0) {
-                    textNodes.push(node);
+                if (node.nodeName === "#text" && node.nodeValue.replace(/\s+/g, "").length > 0) {
+                    textNodes.push(node)
                 } else {
-                    recursy(node);
+                    findAllTextElement(node)
                 }
             })
-        };
+        }
 
-        recursy(body);
+        findAllTextElement(body)
 
-        textNodes.forEach((node, i) => {
-            const wrapper = dom.createElement('text-editor');
+        textNodes.forEach((node, index) => {
+            const wrapper = dom.createElement("text-editor");
             node.parentNode.replaceChild(wrapper, node);
             wrapper.appendChild(node);
-            wrapper.setAttribute("nodeid", i);
+            wrapper.setAttribute("nodeId", index);
         });
 
-        return dom;
+        return dom
     }
 
-    static serializeDOMToString(dom) {
+    static unwrapTextNodes(dom){
+        dom.body.querySelectorAll("text-editor").forEach(element => {
+            element.parentNode.replaceChild(element.firstChild, element);
+        })
+    }
+
+    static serializedDOMtoString(dom) {
         const serializer = new XMLSerializer();
         return serializer.serializeToString(dom);
     }
 
-    static unwrapTextNodes(dom) {
-        dom.body.querySelectorAll("text-editor").forEach(element => {
-            element.parentNode.replaceChild(element.firstChild, element);
-        });
+    static parseStrToDOM(str) {
+        const parser = new DOMParser();
+        return parser.parseFromString(str, "text/html");
     }
 }

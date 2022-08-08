@@ -22,12 +22,15 @@ export default class Editor extends Component {
             newPageName: "",
             loading: true,
             auth: false,
+            loginError: false,
+            loginShort: false,
         }
         this.isLoading = this.isLoading.bind(this);
         this.isLoaded = this.isLoaded.bind(this);
         this.save = this.save.bind(this);
         this.init = this.init.bind(this);
         this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
         this.restoreBackup = this.restoreBackup.bind(this);
     }
 
@@ -58,10 +61,25 @@ export default class Editor extends Component {
                 .post("./api/login.php", {"password": pass})
                 .then(res => {
                     this.setState({
-                        auth: res.data.auth
+                        auth: res.data.auth,
+                        loginError: !res.data.auth,
+                        loginShort: false,
                     })
                 })
+        } else {
+            this.setState({
+                loginError: false,
+                loginShort: true
+            })
         }
+    }
+
+    logout() {
+        axios
+            .get("./api/logout.php")
+            .then(()=>{
+                window.location.replace("/");
+            })
     }
 
     init(e, page) {
@@ -207,12 +225,12 @@ export default class Editor extends Component {
 
 
     render() {
-        const {loading, pageList, backupsList, auth} = this.state;
+        const {loading, pageList, backupsList, auth, loginError, loginShort} = this.state;
         let spinner;
         loading ? spinner = <Spinner active/> : spinner = <Spinner/>
 
         if (!auth) {
-            return <Login login={this.login}/>
+            return <Login login={this.login} loginShort={loginShort} loginError={loginError}/>
         }
 
         return (
@@ -222,7 +240,24 @@ export default class Editor extends Component {
                 {spinner}
                 <Panel/>
 
-                <ConfirmModal target={'modal-save'} method={this.save}/>
+                <ConfirmModal
+                    target={'modal-save'}
+                    method={this.save}
+                    text={{
+                        title: 'Save',
+                        description: 'Do you really want to save all the changes?',
+                        btn: 'Save'
+                    }}
+                />
+                <ConfirmModal
+                    target={'modal-logout'}
+                    method={this.logout}
+                    text={{
+                        title: 'Logout',
+                        description: 'Do you really want to logout',
+                        btn: 'Logout'
+                    }}
+                />
                 <ChooseModal target={'modal-open'} data={pageList} redirect={this.init}/>
                 <ChooseModal target={'modal-backup'} data={backupsList} redirect={this.restoreBackup}/>
                 <EditorMeta target={'modal-meta'} virtualDom={this.virtualDom ? this.virtualDom : false}/>

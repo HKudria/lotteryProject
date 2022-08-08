@@ -15,7 +15,13 @@ export default class Login extends Component {
 
     render() {
         const {pass} = this.state;
-        const {login} = this.props;
+        const {login, loginShort, loginError} = this.props;
+        let renderError, renderShort;
+
+        loginShort ? renderShort = <span className="login-error">Password must be more than 5 symbols</span> : null;
+        loginError ? renderError = <span className="login-error">Password isn't correct</span> : null;
+
+
         return (
             <div className="login-container">
                 <div className="login">
@@ -30,6 +36,8 @@ export default class Login extends Component {
                         value={pass}
                         onChange={(e) => this.onPasswordChange(e)}
                     />
+                    {renderShort}
+                    {renderError}
                     <button
                         className="uk-button uk-button-primary uk-margin-top"
                         type="button"

@@ -8,6 +8,7 @@ import Spinner from "../spinner";
 import ConfirmModal from "../confirm-modal";
 import ChooseModal from "../choose-modal";
 import Panel from "../panel";
+import EditorMeta from "../editor-meta";
 
 export default class Editor extends Component {
     constructor() {
@@ -90,11 +91,11 @@ export default class Editor extends Component {
         style.innerHTML = `
             text-editor:hover {
                 outline: 3px solid orange;
-                outline-offset: 8px;
+                outline-offset: 0px;
             }
             text-editor:focus {
                 outline: 3px solid red;
-                outline-offset: 8px;
+                outline-offset: 0px;
             }
         `;
         this.iframe.contentDocument.head.appendChild(style);
@@ -117,16 +118,21 @@ export default class Editor extends Component {
             }))
     }
 
-    restoreBackup(e, backup){
+    restoreBackup(e, backup) {
         if (e) {
             e.preventDefault();
         }
 
 
-        UIkit.modal.confirm("Do you really want to restore backup? All change will be deleted", {labels: {ok: 'Restore', cancel:'Cancel'}}).then(()=>{
+        UIkit.modal.confirm("Do you really want to restore backup? All change will be deleted", {
+            labels: {
+                ok: 'Restore',
+                cancel: 'Cancel'
+            }
+        }).then(() => {
             this.isLoading();
             return axios.post("./api/restoreBackup.php", {"page": this.currentPage, "file": backup})
-        }).then(()=>{
+        }).then(() => {
             this.open(this.currentPage, this.isLoaded)
         })
     }
@@ -147,9 +153,8 @@ export default class Editor extends Component {
     render() {
         const {loading, pageList, backupsList} = this.state;
         let spinner;
-
         loading ? spinner = <Spinner active/> : spinner = <Spinner/>
-        console.log(backupsList)
+
         return (
             <>
                 <iframe src="" frameBorder="0"/>
@@ -157,10 +162,10 @@ export default class Editor extends Component {
                 {spinner}
                 <Panel/>
 
-
                 <ConfirmModal target={'modal-save'} method={this.save}/>
                 <ChooseModal target={'modal-open'} data={pageList} redirect={this.init}/>
                 <ChooseModal target={'modal-backup'} data={backupsList} redirect={this.restoreBackup}/>
+                <EditorMeta target={'modal-meta'} virtualDom={this.virtualDom?this.virtualDom:false}/>
 
             </>
         );

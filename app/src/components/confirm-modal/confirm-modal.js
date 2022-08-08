@@ -8,7 +8,7 @@ const ConfirmModal = ({target,method}) => {
                 <h2 className="uk-modal-title">Save</h2>
                 <p>Do you really want to save all the changes?</p>
                 <p className="uk-text-right">
-                    <button className="uk-button uk-button-default uk-modal-close" type="button">Cancel
+                    <button className="uk-button uk-button-default uk-modal-close uk-margin-small-right" type="button">Cancel
                     </button>
                     <button
                         className="uk-button uk-button-primary uk-modal-close"

@@ -36,6 +36,9 @@
     "webpack-stream": "^7.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-postcss": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.49.9"

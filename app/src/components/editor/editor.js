@@ -66,7 +66,7 @@ export default class Editor extends Component {
         this.loadBackupList();
     }
 
-    async save(onSuccess, onError) {
+    async save() {
         this.isLoading()
         const newDom = this.virtualDom.cloneNode(this.virtualDom);
         DOMHelper.unwrapTextNodes(newDom);
@@ -74,8 +74,8 @@ export default class Editor extends Component {
         const html = DOMHelper.serializedDOMtoString(newDom);
         await axios
             .post("./api/savepage.php", {pageName: this.currentPage, html})
-            .then(onSuccess)
-            .catch(onError)
+            .then(() => this.showNotification('Successful saved','success'))
+            .catch(() => this.showNotification('Something was wrong. Please try again later or contact with IT specialist','danger'))
             .finally(this.isLoaded);
 
         this.loadBackupList();
@@ -91,7 +91,7 @@ export default class Editor extends Component {
         this.iframe.contentDocument.body.querySelectorAll("[editableimgid]").forEach(element => {
             const id = element.getAttribute("editableimgid");
             const virtualElement = this.virtualDom.body.querySelector(`[editableimgid="${id}"]`)
-            new EditorImages(element, virtualElement)
+            new EditorImages(element, virtualElement, this.isLoading, this.isLoaded, this.showNotification);
         });
     }
 
@@ -117,6 +117,10 @@ export default class Editor extends Component {
             
         `;
         this.iframe.contentDocument.head.appendChild(style);
+    }
+
+    showNotification(message, status){
+        UIkit.notification({message, status});
     }
 
 

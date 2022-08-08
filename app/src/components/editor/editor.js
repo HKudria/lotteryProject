@@ -19,11 +19,11 @@ export default class Editor extends Component {
             newPageName: "",
             loading: true
         }
-        this.createNewPage = this.createNewPage.bind(this)
         this.isLoading = this.isLoading.bind(this);
         this.isLoaded = this.isLoaded.bind(this);
         this.save = this.save.bind(this);
         this.init = this.init.bind(this);
+        this.restoreBackup = this.restoreBackup.bind(this);
     }
 
     componentDidMount() {
@@ -117,22 +117,18 @@ export default class Editor extends Component {
             }))
     }
 
-    createNewPage() {
-        axios
-            .post("./api/createNewPage.php", {"name": this.state.newPageName})
-            .then(this.loadPageList())
-            .catch(() => {
-                alert('page is exist!')
-            });
-    }
+    restoreBackup(e, backup){
+        if (e) {
+            e.preventDefault();
+        }
 
-    deletePage(page) {
-        axios
-            .post("./api/deletePage.php", {"name": page})
-            .then(this.loadPageList())
-            .catch(() => {
-                alert('page isn\'t exist!')
-            });
+
+        UIkit.modal.confirm("Do you really want to restore backup? All change will be deleted", {labels: {ok: 'Restore', cancel:'Cancel'}}).then(()=>{
+            this.isLoading();
+            return axios.post("./api/restoreBackup.php", {"page": this.currentPage, "file": backup})
+        }).then(()=>{
+            this.open(this.currentPage, this.isLoaded)
+        })
     }
 
     isLoading() {
@@ -164,7 +160,7 @@ export default class Editor extends Component {
 
                 <ConfirmModal target={'modal-save'} method={this.save}/>
                 <ChooseModal target={'modal-open'} data={pageList} redirect={this.init}/>
-                <ChooseModal target={'modal-backup'} data={backupsList} redirect={this.init}/>
+                <ChooseModal target={'modal-backup'} data={backupsList} redirect={this.restoreBackup}/>
 
             </>
         );

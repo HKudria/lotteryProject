@@ -8,6 +8,10 @@ if (!is_array($backups)) {
     $backups = [];
 }
 
+if(!is_dir("../backups/")){
+    mkdir("../backups/");
+}
+
 if ($newHTML && $file) {
     $backupFN = uniqid() . ".html";
     copy("../../" . $file, "../backups/" . $backupFN);

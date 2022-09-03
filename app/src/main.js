@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
-import Editor from "./components/editor";
+import App from "./browser";
 
 const root = createRoot(document.getElementById('root'));
-root.render(<Editor />);
+root.render(<App />);

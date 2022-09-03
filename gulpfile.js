@@ -4,8 +4,11 @@ const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const dist = "/Applications/MAMP/htdocs/react_admin/admin";
+
+
+const dist = "./deploy";
 const prod = "./build/";
 
 gulp.task("copy-html", () => {
@@ -35,12 +38,20 @@ gulp.task("build-js", () => {
                                     corejs: 3,
                                     useBuiltIns: "usage"
                                 }],
-                                    "@babel/react"]
+                                    "@babel/preset-react"]
                             }
                         }
                     }
                 ]
-            }
+            },
+            devServer: {
+                historyApiFallback: true,
+            },
+            plugins: [
+                new HtmlWebpackPlugin({
+                    template: 'deploy/index.html'
+                })
+            ]
         }))
         .pipe(gulp.dest(dist));
 });

@@ -1,49 +1,44 @@
 {
-  "name": "admin_panel",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HKudria/admin_panel.git"
-  },
-  "author": "",
-  "browserslist": [
-    "last 2 chrome version",
-    "last 2 firefox versions",
-    "last 2 ios versions"
-  ],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/HKudria/admin_panel/issues"
-  },
-  "homepage": "https://github.com/HKudria/admin_panel#readme",
+  "name": "mr-black-lotery",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
-    "babel-loader": "^8.2.3",
-    "core-js": "^3.21.1",
-    "gulp": "^4.0.2",
-    "gulp-sass": "^5.1.0",
-    "html-webpack-plugin": "^5.5.0",
-    "jquery": "^3.6.0",
-    "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0",
-    "uikit": "^3.15.1",
-    "webpack-cli": "^4.9.2",
-    "webpack-stream": "^7.0.0"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.8",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-postcss": "^9.0.1",
+    "cookie-session": "^2.0.0",
+    "express": "^4.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.49.9"
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.54.8",
+    "uikit": "^3.15.6",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

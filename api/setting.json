@@ -1,0 +1,8 @@
+{
+  "password": "pass123",
+  "dbName": "lottery",
+  "host": "localhost",
+  "port": 3306,
+  "passwordDB" : "",
+  "userName" : "root"
+}

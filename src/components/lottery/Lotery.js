@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import Login from "../login";
 import {NavLink} from "react-router-dom";
 
 export default class Lottery extends Component{

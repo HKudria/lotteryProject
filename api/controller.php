@@ -9,8 +9,8 @@ $error = '';
 
 switch ($_GET['fn']){
     case 'createLottery':
-        if($data["count"] > 0){
-            $result = $repo->createLottery($data["count"],$data["desc"]);
+        if($data["present_count"] > 0 && $data["box_count"] > $data["present_count"]){
+            $result = $repo->createLottery($data["present_count"], $data["box_count"], $data["desc"]);
             echo json_encode($result);
         } else {
             $error = 'Error - create lottery';
@@ -21,6 +21,23 @@ switch ($_GET['fn']){
             echo json_encode($repo->createPresent($data['lottery_id'], $data['presents']));
         } else {
             echo 'no data';
+        }
+        break;
+    case 'getAllList':
+        echo json_encode($repo->getAllLottery());
+        break;
+    case 'activateLottery':
+        echo json_encode($repo->activateLottery($data['lottery_id']));
+        break;
+    case 'generateToken':
+        $nick = null;
+        if (isset($data['nick'])){
+            $nick = $data['nick'];
+        }
+        try {
+            echo json_encode($repo->generateToken($nick));
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
         break;
     default:

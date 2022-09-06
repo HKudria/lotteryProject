@@ -3,6 +3,7 @@ import './App.css';
 import React from ".";
 import AdminPanel from "./components/adminPanel";
 import Lottery from "./components/lottery";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {

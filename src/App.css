@@ -36,3 +36,52 @@
     transform: rotate(360deg);
   }
 }
+
+.uk-hr{
+  color: black;
+  border: 1px solid;
+}
+
+label {
+  margin-left: 5px;
+}
+
+button{
+  margin-right: 10px;
+}
+
+.tb{
+  font-size: 12px;
+  background-color: lightslategray;
+  margin-bottom: 2px !important;
+}
+
+.mw-300{
+  min-width: 350px;
+}
+
+.login-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+.login {
+  width: 600px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.login-error {
+  display: block;
+  color: red;
+  margin-top: 10px;
+}

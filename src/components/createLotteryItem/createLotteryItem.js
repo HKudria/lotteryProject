@@ -24,29 +24,32 @@ export default class CreateLotteryItem extends Component {
     createLotteryItem = () => {
         const itemComponent = []
         for (let i = 0; i < this.props.count; i++) {
-            itemComponent.push(<div >
-                Create new lottery {this.props.id}
-                <textarea className="uk-textarea"
-                          placeholder='Description'
-                          onChange={(event)=>this.updateValueFromItem(event, i)}
-                          value={this.state.itemValue[i]}
-                          key={this.props.id}
-                />
-            </div>)
+            let number = i + 1;
+            itemComponent.push(
+                <div className="form-group mb-1" key={`divItem${number}`}>
+                    <label htmlFor="exampleFormControlTextarea1 ml-3">Present #{number}</label>
+                    <textarea className="form-control"
+                              placeholder='Present description'
+                              onChange={(event)=>this.updateValueFromItem(event, i)}
+                              value={this.state.itemValue[i]}
+                              key={`textAreaItem${number}`}
+                              rows="2"/>
+                </div>)
         }
         return (
-            <div>
+            <div className="p-2">
                 {itemComponent.map(element => element)}
-                <button className="uk-button uk-button-default" onClick={this.onSubmitLotteryPresent}> ADD PRESENTS </button>
+                <button className="btn btn-primary uk-align-right mt-2" onClick={this.onSubmitLotteryPresent}> CREATE LOTTERY </button>
             </div>
         )
     }
 
     render() {
         return (
-            <>
+            <div>
+                <hr className='uk-hr m-2'/>
                 {this.createLotteryItem()}
-            </>
+            </div>
         );
     }
 

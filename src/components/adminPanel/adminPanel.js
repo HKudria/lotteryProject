@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import Login from "../login";
 import CreateLottery from "../createLottery";
+import LotteryList from "../lotteryList";
 
 export default class AdminPanel extends Component {
        state = {
             auth: false,
             loginError: false,
             loginShort: false,
+            lotteryState: ''
         }
 
     componentDidMount() {
@@ -23,6 +25,9 @@ export default class AdminPanel extends Component {
                 this.setState({
                     auth: res.auth
                 })
+                if(res.auth){
+                    this.updateComponent()
+                }
             })
     }
 
@@ -56,6 +61,18 @@ export default class AdminPanel extends Component {
         }
     }
 
+    updateComponent = () => {
+        fetch('http://localhost/mrBlackLotery/api/controller.php?fn=getAllList', {
+            crossDomain: true,
+            method: 'GET',
+        }).then(response => response.json())
+            .then(res => {
+                this.setState({
+                    lotteryState: res
+                })
+            })
+    }
+
     render() {
         const {auth, loginError, loginShort} = this.state;
 
@@ -64,9 +81,12 @@ export default class AdminPanel extends Component {
         }
 
         return (
-            <>
-                <CreateLottery/>
-            </>
+            <div className="container">
+            <div className='row d-flex flex-wrap'>
+                <div className='col col-5-sm mw-300'><CreateLottery updateComponent={this.updateComponent}/></div>
+                <div className='col col-7-sm p-0'><LotteryList lotteryState={this.state.lotteryState} updateComponent={this.updateComponent}/></div>
+            </div>
+            </div>
         );
     }
 

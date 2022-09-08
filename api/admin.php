@@ -8,5 +8,5 @@ session_start();
 
 $routing = new Routing(json_decode(file_get_contents("php://input"), true));
 
-echo json_encode($routing->authRouting());
+echo json_encode($routing->adminRouting());
 

@@ -12,10 +12,11 @@ export default class GenerateToken extends Component {
     }
 
     generateToken = () => {
-        fetch('http://localhost/mrBlackLotery/api/controller.php?fn=generateToken', {
+        fetch('http://localhost/mrBlackLotery/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
+                'route':'generateToken',
                 'nick': this.state.nick
             })
         }).then(response => response.json())
@@ -27,7 +28,6 @@ export default class GenerateToken extends Component {
     }
 
     render() {
-        console.log(this.state.tokenGenerated)
         return (
             <div className="login-container">
                 <div className="login">

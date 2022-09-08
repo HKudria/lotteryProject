@@ -17,11 +17,12 @@ export default class CreateLottery extends Component {
         isModalToken: false,
     }
     onSubmitCreateLottery = () => {
-        fetch('http://localhost/mrBlackLotery/api/controller.php?fn=createLottery', {
+        fetch('http://localhost/mrBlackLotery/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
-                'desc': this.state.lotteryDescription,
+                'route': 'createLottery',
+                'description': this.state.lotteryDescription,
                 'present_count': this.state.countOfLots,
                 'box_count': (this.state.countOfBox ? this.state.countOfBox : 100)
             })
@@ -38,10 +39,11 @@ export default class CreateLottery extends Component {
     }
 
     onSubmitLotteryPresent = (state) => {
-        fetch('http://localhost/mrBlackLotery/api/controller.php?fn=createPresent', {
+        fetch('http://localhost/mrBlackLotery/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
+                'route': 'createPresent',
                 'lottery_id': this.state.lotteryId,
                 'presents': state
             })

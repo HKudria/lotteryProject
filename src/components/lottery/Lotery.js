@@ -1,12 +1,23 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
+import UserLogin from "../userLogin";
 
 export default class Lottery extends Component{
+    state = {
+        userToken: '',
+        lotteryCount: '',
+        lotteryToken: ''
+    }
+
+    updateUserToken = (token) => {
+       this.setState({
+           userToken: token
+       })
+    }
+
     render() {
         return (
             <>
-                this will be main logic
-                <NavLink to='/admin'> Go to admin </NavLink>
+                {!this.state.userToken?<UserLogin updateToken={this.updateUserToken}/>:''}
             </>
         )
     }

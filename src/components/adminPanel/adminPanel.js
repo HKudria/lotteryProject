@@ -16,7 +16,7 @@ export default class AdminPanel extends Component {
     }
 
     checkAuth() {
-        fetch('http://localhost/mrBlackLotery/api/checkAuth.php', {
+        fetch('http://localhost/mrBlackLotery/api/login.php', {
             crossDomain: true,
             method: 'GET',
             withCredentials: true
@@ -33,11 +33,12 @@ export default class AdminPanel extends Component {
 
     login = (pass) => {
         if (pass.length > 5) {
-            fetch('http://localhost/mrBlackLotery/api/login.php', {
+            fetch('http://localhost/mrBlackLotery/api/admin.php', {
                 crossDomain: true,
                 method: 'POST',
                 withCredentials: true,
                 body: JSON.stringify({
+                    'route': 'authorize',
                     'password': pass
                 })
             }).then(response => response.json())
@@ -62,9 +63,12 @@ export default class AdminPanel extends Component {
     }
 
     updateComponent = () => {
-        fetch('http://localhost/mrBlackLotery/api/controller.php?fn=getAllList', {
+        fetch('http://localhost/mrBlackLotery/api/admin.php', {
             crossDomain: true,
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({
+               'route': 'getAllList'
+            })
         }).then(response => response.json())
             .then(res => {
                 this.setState({

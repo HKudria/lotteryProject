@@ -1,6 +1,6 @@
 <?php
 
-namespace Connect;
+namespace Service;
 use PDO;
 use PDOStatement;
 
@@ -8,13 +8,12 @@ class Connection
 {
 
    static function dbInstance() : PDO{
-        $dbParams = json_decode(file_get_contents('./setting.json', true));
+        $dbParams = json_decode(file_get_contents('./config/setting.json', true));
         static $db;
         if($db === null){
             $db = new PDO('mysql:dbname='.$dbParams->dbName.';host='.$dbParams->host.';
         port='.$dbParams->port.';charset=utf8', $dbParams->userName,
                 $dbParams->passwordDB);
-
         }
         return $db;
     }

@@ -2,7 +2,8 @@ import React, {Component} from "react";
 export default class UserLogin extends Component {
     state = {
         token: '',
-        isWrongToken: false
+        isWrongToken: false,
+        isUsed: false
     }
 
     onPasswordChange = (e) => {
@@ -12,6 +13,10 @@ export default class UserLogin extends Component {
     }
 
     checkToken = () => {
+        this.setState({
+            isUsed: false,
+            isWrongToken: false
+        })
         fetch('http://localhost/mrBlackLotery/api/user.php', {
             crossDomain: true,
             method: 'POST',
@@ -21,9 +26,12 @@ export default class UserLogin extends Component {
             })
         }).then(response => response.json())
             .then(res => {
-                console.log(res)
                 if(res.token){
                     this.props.updateToken(res.token);
+                } else if(res.used){
+                    this.setState({
+                        isUsed: true
+                    })
                 } else {
                     this.setState({
                         isWrongToken: true
@@ -38,6 +46,7 @@ export default class UserLogin extends Component {
                 <div className="login">
                     <h2 className="uk-modal-title uk-text-center">Login In</h2>
                     {this.state.isWrongToken?<h2 className="uk-modal-title uk-text-center">Wrong token!</h2>:''}
+                    {this.state.isUsed?<h2 className="uk-modal-title uk-text-center">Token was used!</h2>:''}
                     <div className="uk-margin-top uk-text-lead">Enter your token:</div>
                     <input
                         type="password"

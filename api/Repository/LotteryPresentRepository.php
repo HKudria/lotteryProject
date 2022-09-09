@@ -32,5 +32,14 @@ class LotteryPresentRepository
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
+    function checkWin(int $id,int  $number){
+        $sql = "SELECT * FROM lottery_present WHERE lotterry_id = :id and number = :number AND token_id is null";
+        $query = Connection::dbQuery($sql, ['id' => $id, 'number'=>$number]);
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 
+    function setWinUser(int $tokenId, int $number): bool{
+        $sql = "UPDATE lottery_present SET token_id = :token WHERE number = :number";
+        return (bool)Connection::dbQuery($sql, ['token' => $tokenId, 'number'=>$number]);
+    }
 }

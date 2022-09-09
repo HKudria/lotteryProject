@@ -61,6 +61,20 @@ export default class CreateLottery extends Component {
             })
     }
 
+    disLottery = () => {
+        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+            crossDomain: true,
+            method: 'POST',
+            body: JSON.stringify({
+                'route': 'disActivateLottery',
+            })
+        }).then(response => response.json())
+            .then((res) => {
+                alert(res.message)
+                this.props.updateComponent();
+            })
+    }
+
     showTokenModal = () => {
         this.setState(prevState => ({
             isModalToken: !prevState.isModalToken
@@ -125,6 +139,9 @@ export default class CreateLottery extends Component {
                         </button> : ''}
                     <button className="btn btn-primary uk-align-right mr-2"
                             onClick={this.showTokenModal}> GENERATE TOKEN
+                    </button>
+                    <button className="btn btn-primary uk-align-right mr-2"
+                            onClick={this.disLottery}> Disactivate lottery
                     </button>
                 </div>
                 {this.state.isModalToken?<GenerateToken closeButton={this.showTokenModal}/>:''}

@@ -6,6 +6,8 @@ use Exception;
 use Repository\LotteryPresentRepository;
 use Repository\LotteryRepository;
 use Repository\TokenRepository;
+use Controller\UserTokenController;
+use Repository\PrizeLogRepository;
 
 class LotteryController
 {
@@ -55,12 +57,24 @@ class LotteryController
 
     function getActiveLottery(): array
     {
-        $lottery = $this->getAllLotteries();
-        $countOfPrize = $this->lotteryPresentRepository->countNotUsedPrize($lottery[0]['id']);
-        $result = [];
-        $result['token'] = $lottery[0]['token'];
-        $result['count'] = $countOfPrize['prize'];
-        return $result;
+        $error['error'] = true;
+        $lottery = $this->lotteryRepository->getActiveLottery();
+
+        if($lottery){
+            $countOfPrize = $this->lotteryPresentRepository->countNotUsedPrize($lottery['id']);
+
+            if($countOfPrize['prize'] === 0){
+                return $error;
+            }
+            $result = [];
+            $result['token'] = $lottery['token'];
+            $result['boxCount'] = $lottery['box_count'];
+            $result['availablePresentCount'] = $countOfPrize['prize'];
+            return $result;
+        }
+
+        return $error;
+
     }
 
     function generateToken(?string $nickName = null): array|string
@@ -70,5 +84,30 @@ class LotteryController
         } catch (Exception $e) {
             return 'Generate user token error';
         }
+    }
+
+    function disactivateLottery(): array{
+       return $this->lotteryRepository->disactivateLottery();
+    }
+
+    function checkPrize(string $lotteryToken, string $authToken,  int $prizeId) : array{
+       $userToken = new UserTokenController();
+       $prizeController = new PrizeLogController();
+       if(isset($userToken->checkUserToken($authToken)['token'])){
+           $userToken->makeTokenUsed($authToken);
+           $prizeController->setPrizeOpened($lotteryToken, $prizeId);
+           $lottery = $this->lotteryRepository->selectLotteryByToken($lotteryToken);
+           $checkWin = $this->lotteryPresentRepository->checkWin($lottery['id'],$prizeId);
+           if ($checkWin){
+               $getUser = $this->tokenRepository->getTokenByToken($authToken);
+               $this->lotteryPresentRepository->setWinUser($getUser['id'],$prizeId);
+               $prize = $checkWin['name'];
+               return ['message' => "Congratulation! You won: $prize"];
+
+           } else {
+               return ['message' => 'Ohh.. You lucky next time!'];
+           }
+       }
+           return ['message' => 'Token was used early'];
     }
 }

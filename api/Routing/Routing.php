@@ -5,6 +5,7 @@ namespace Routing;
 use Controller\AuthController;
 use Controller\LotteryController;
 use Controller\UserTokenController;
+use Controller\PrizeLogController;
 
 class Routing
 {
@@ -12,6 +13,7 @@ class Routing
     private LotteryController $lotteryController;
     private AuthController $authController;
     private UserTokenController $userTokenController;
+    private PrizeLogController $prizeLogController;
 
     public function __construct(array|string|null $data)
     {
@@ -19,6 +21,7 @@ class Routing
         $this->lotteryController = new LotteryController();
         $this->authController = new AuthController();
         $this->userTokenController = new UserTokenController();
+        $this->prizeLogController = new PrizeLogController();
     }
 
     function adminRouting(): string|array
@@ -31,6 +34,7 @@ class Routing
             'activateLottery' => $this->lotteryController->setActiveLottery($this->data['lottery_id']),
             'getActiveLottery' => $this->lotteryController->getActiveLottery(),
             'generateToken' => $this->lotteryController->generateToken($data['nick'] ?? null),
+            'disActivateLottery' => $this->lotteryController->disactivateLottery(),
             default => 'Wrong request',
         };
     }
@@ -44,8 +48,9 @@ class Routing
     {
         return match ($this->data['route']) {
             'checkToken' => $this->userTokenController->checkUserToken($this->data['token']),
-            'createPresent' => $this->lotteryController->createPresent($this->data['lottery_id'], $this->data['presents']),
-            'getAllList' => $this->lotteryController->getAllLotteries(),
+            'getActiveLottery' => $this->lotteryController->getActiveLottery(),
+            'getOpenedBox' => $this->prizeLogController->getOpenedBox($this->data['token']),
+            'checkPrize' => $this->lotteryController->checkPrize($this->data['lottery_token'], $this->data['user_token'], $this->data['id']),
             default => 'Wrong request',
         };
     }

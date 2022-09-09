@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import UserLogin from "../userLogin";
+import UserLogin from "./userLogin";
+import MainLotteryPage from "./mainLotteryPage";
 
 export default class Lottery extends Component{
     state = {
@@ -15,9 +16,12 @@ export default class Lottery extends Component{
     }
 
     render() {
+        if(!this.state.userToken){
+            return <UserLogin updateToken={this.updateUserToken}/>
+        }
         return (
             <>
-                {!this.state.userToken?<UserLogin updateToken={this.updateUserToken}/>:''}
+                <MainLotteryPage userToken={this.state.userToken} updateToken={this.updateUserToken}/>
             </>
         )
     }

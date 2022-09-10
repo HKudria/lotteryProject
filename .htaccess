@@ -1,2 +1,31 @@
+<IfModule mod_rewrite.c>
 
-Header set Access-Control-Allow-Origin '*'
+
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+
+
+</IfModule>
+
+php_flag log_errors on
+php_value error_log PHP_errors.log
+
+Options -Indexes
+
+IndexIgnore *
+
+<Files .htaccess>
+Order allow,deny
+Deny from all
+</Files>
+
+<FilesMatch "\.(json)$">
+Order allow,deny
+Deny from all
+
+</FilesMatch>

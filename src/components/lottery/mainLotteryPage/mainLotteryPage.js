@@ -96,13 +96,14 @@ export default class MainLotteryPage extends Component {
         }
     }
 
-
     render() {
         return (
             <div className='bg'>
                 <div className='container'>
-                    <h2 className='text-center'>Welcome to BlackCommunity Lottery</h2>
-                    <h2 className='text-center'>Available prize to won: {this.state.availablePresentCount}</h2>
+                    <div className='welcome'>
+                        <h2 className='text-center'>Welcome to <b>BlackCommunity</b> Lottery</h2>
+                        <h2 className='text-center'>Available prize to won: {this.state.availablePresentCount}</h2>
+                    </div>
                     <div className='row justify-content-around'>
                         {this.state.boxes}
                     </div>

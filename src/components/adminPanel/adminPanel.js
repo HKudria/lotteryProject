@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Login from "../login";
-import CreateLottery from "../createLottery";
-import LotteryList from "../lotteryList";
+import CreateLottery from "./createLottery";
+import LotteryList from "./lotteryList";
 
 export default class AdminPanel extends Component {
        state = {

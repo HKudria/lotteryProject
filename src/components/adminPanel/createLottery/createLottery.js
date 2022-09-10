@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import CreateLotteryItem from "../createLotteryItem";
 import GenerateToken from "../generateToken";
+import {NavLink} from "react-router-dom";
 
 export default class CreateLottery extends Component {
     constructor(props) {
@@ -99,6 +100,16 @@ export default class CreateLottery extends Component {
         })
     }
 
+    logout = () => {
+        fetch('http://localhost/mrBlackLotery/api/auth.php', {
+            crossDomain: true,
+            method: 'POST',
+            body: JSON.stringify({
+                'route': 'logout',
+            })
+        }).then(r => {})
+    }
+
     render() {
         return (
             <>
@@ -143,8 +154,15 @@ export default class CreateLottery extends Component {
                     <button className="btn btn-primary uk-align-right mr-2"
                             onClick={this.disLottery}> Disactivate lottery
                     </button>
+                    <NavLink to="/admin/userList">
+                        <button className="btn btn-primary uk-align-right mr-2"> User list
+                        </button>
+                    </NavLink>
+                    <button className="btn btn-primary uk-align-right mr-2"
+                            onClick={this.logout}> Logout
+                    </button>
                 </div>
-                {this.state.isModalToken?<GenerateToken closeButton={this.showTokenModal}/>:''}
+                {this.state.isModalToken ? <GenerateToken closeButton={this.showTokenModal}/> : ''}
             </>
         );
     }

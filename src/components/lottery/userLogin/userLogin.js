@@ -44,7 +44,7 @@ export default class UserLogin extends Component {
         return (
             <div className="login-container">
                 <div className="login">
-                    <h2 className="uk-modal-title uk-text-center">Login In</h2>
+                    <h2 className="uk-modal-title uk-text-center">Welcome to BlackCommunity lottery!</h2>
                     {this.state.isWrongToken?<h2 className="uk-modal-title uk-text-center">Wrong token!</h2>:''}
                     {this.state.isUsed?<h2 className="uk-modal-title uk-text-center">Token was used!</h2>:''}
                     <div className="uk-margin-top uk-text-lead">Enter your token:</div>
@@ -57,8 +57,6 @@ export default class UserLogin extends Component {
                         value={this.state.token}
                         onChange={this.onPasswordChange}
                     />
-                    {/*{renderShort}*/}
-                    {/*{renderError}*/}
                     <button
                         className="uk-button uk-button-primary uk-margin-top"
                         type="button"

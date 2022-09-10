@@ -110,4 +110,13 @@ class LotteryController
        }
            return ['message' => 'Token was used early'];
     }
+
+    function getOpenedBox(string $token): array{
+        $lottery = $this->lotteryRepository->selectLotteryByToken($token);
+        return $this->lotteryPresentRepository->getOpenedBox($lottery['id']);
+    }
+
+    function selectUerList(int $dayLimit): array {
+        return $this->tokenRepository->selectAllUsedToken($dayLimit);
+    }
 }

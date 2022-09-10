@@ -29,7 +29,35 @@ export default class LotteryList extends Component {
                 {arrayOfList.map((key) => {
                     const isActive = toBoolean(key[0].active)
                     return (
-                        <>
+                        <div key={key[0].lotId}>
+                            <table className="table" key={`tableHead${Math.random()}`}>
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Lottery Id</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Count of present</th>
+                                    <th scope="col">Count of box</th>
+                                    <th scope="col">Is active</th>
+                                    <th scope="col">Activate</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">{key[0].lotId}</th>
+                                    <td>{key[0].description}</td>
+                                    <td>{key[0].presents}</td>
+                                    <td>{key[0].boxes}</td>
+                                    <td>{isActive?'YES':'NO'}</td>
+                                    <td>
+                                        <button className="btn btn-primary"
+                                                disabled={isActive}
+                                                onClick={() => this.onSelectLottery(key[0].lotId)}
+                                                key={`button${Math.random()}`}> Activate
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             <div className='small'>
                                 <table className="table table-responsive-sm tb">
                                     <thead className="thead-dark">
@@ -60,34 +88,7 @@ export default class LotteryList extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <table className="table" key={`tableHead${Math.random()}`}>
-                                <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">Lottery Id</th>
-                                    <th scope="col">Count of present</th>
-                                    <th scope="col">Count of box</th>
-                                    <th scope="col">Is active</th>
-                                    <th scope="col">Activate</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">{key[0].lotId}</th>
-                                    <td>{key[0].presents}</td>
-                                    <td>{key[0].boxes}</td>
-                                    <td>{isActive?'YES':'NO'}</td>
-                                    <td>
-                                        <button className="btn btn-primary"
-                                                disabled={isActive}
-                                                onClick={() => this.onSelectLottery(key[0].lotId)}
-                                                key={`button${Math.random()}`}> Activate
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </>
+                        </div>
                     )
                 })}
             </div>

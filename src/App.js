@@ -4,6 +4,7 @@ import React from ".";
 import AdminPanel from "./components/adminPanel";
 import Lottery from "./components/lottery";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UserList from "./components/adminPanel/userList";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Lottery />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/userList" element={<UserList />} />
         </Routes>
       </BrowserRouter>
   );

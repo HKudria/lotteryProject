@@ -41,4 +41,11 @@ class TokenRepository
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
+    function selectAllUsedToken(int $day = 30): bool|array
+    {
+        $sql = "SELECT * FROM user_token WHERE DATE(updated_at) >= DATE(NOW()) - INTERVAL :day DAY AND is_used = true AND nick is not null";
+        $query = Connection::dbQuery($sql, ['day' => $day]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

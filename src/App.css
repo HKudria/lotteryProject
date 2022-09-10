@@ -87,13 +87,20 @@ button{
 }
 
 .box {
-  min-width: 100px;
+  min-width: 75px;
+  cursor: pointer;
 }
 
 .bg{
   height: 100vh;
   background-image: url("./../public/bg.jpg");
   background-position: center center;
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover; /* Resize the background image to cover the entire container */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: auto;
+}
+
+.welcome {
+  background-color: rgba(255,255,255,0.3);
 }

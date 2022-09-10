@@ -33,8 +33,9 @@ class Routing
             'getAllList' => $this->lotteryController->getAllLotteries(),
             'activateLottery' => $this->lotteryController->setActiveLottery($this->data['lottery_id']),
             'getActiveLottery' => $this->lotteryController->getActiveLottery(),
-            'generateToken' => $this->lotteryController->generateToken($data['nick'] ?? null),
+            'generateToken' => $this->lotteryController->generateToken($this->data['nick'] ?? null),
             'disActivateLottery' => $this->lotteryController->disactivateLottery(),
+            'userList' => $this->lotteryController->selectUerList($this->data['dayLimit']),
             default => 'Wrong request',
         };
     }
@@ -49,7 +50,7 @@ class Routing
         return match ($this->data['route']) {
             'checkToken' => $this->userTokenController->checkUserToken($this->data['token']),
             'getActiveLottery' => $this->lotteryController->getActiveLottery(),
-            'getOpenedBox' => $this->prizeLogController->getOpenedBox($this->data['token']),
+            'getOpenedBox' => $this->lotteryController->getOpenedBox($this->data['token']),
             'checkPrize' => $this->lotteryController->checkPrize($this->data['lottery_token'], $this->data['user_token'], $this->data['id']),
             default => 'Wrong request',
         };

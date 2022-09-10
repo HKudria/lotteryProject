@@ -42,4 +42,10 @@ class LotteryPresentRepository
         $sql = "UPDATE lottery_present SET token_id = :token WHERE number = :number";
         return (bool)Connection::dbQuery($sql, ['token' => $tokenId, 'number'=>$number]);
     }
+
+    function getOpenedBox (int $lotteryId) :array|bool{
+        $sql = "SELECT number FROM lottery_present WHERE lotterry_id = :id and token_id is not null";
+        $query = Connection::dbQuery($sql, ['id'=>$lotteryId]);
+        return $query->fetchAll(PDO::FETCH_COLUMN);
+    }
 }

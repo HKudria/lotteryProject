@@ -1,0 +1,6 @@
+<files settings.json>
+    Order allow,deny
+    Deny from all
+</files>
+
+Header set Access-Control-Allow-Origin '*'

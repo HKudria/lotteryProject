@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Login from "./login";
 import CreateLottery from "./createLottery";
 import LotteryList from "./lotteryList";
-import cookie from "react-cookie";
+import {getCookie, deleteCookie, createCookieInHour} from "../../helper/cookie";
 
 export default class AdminPanel extends Component {
     state = {
@@ -22,7 +22,7 @@ export default class AdminPanel extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'checkAuth',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
             })
         }).then(response => response.json())
             .then(res => {
@@ -49,11 +49,13 @@ export default class AdminPanel extends Component {
                     auth: res.auth
                 })
                 if (res.auth) {
-                    localStorage.setItem('sessionId', res.id)
+                    createCookieInHour('sessionId', res.id, 1)
                     this.updateComponent()
                 }
             })
     }
+
+
 
     logout = () => {
         fetch('http://localhost/mrBlackLotery/api/login.php', {
@@ -61,10 +63,10 @@ export default class AdminPanel extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'logout',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
             })
-        }).then(r => {
-            localStorage.setItem('sessionId', null)
+        }).then(() => {
+            deleteCookie('sessionId')
             this.setState({
                 auth: false
             })
@@ -77,7 +79,7 @@ export default class AdminPanel extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'getAllList',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
             })
         }).then(response => response.json())
             .then(res => {

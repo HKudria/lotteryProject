@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
+import {getCookie} from "../../../helper/cookie";
 
 
 export default class UserList extends Component {
@@ -19,7 +20,7 @@ export default class UserList extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'userList',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
                 'dayLimit': this.state.dayLimit
             })
         }).then(response => response.json())
@@ -32,7 +33,7 @@ export default class UserList extends Component {
 
     onChangeDayLimit = (event) => {
         this.setState({
-            dayLimit: event.target.value
+            dayLimit: event.target.value.replace(/[^0-9]/g, "")
         })
     }
 

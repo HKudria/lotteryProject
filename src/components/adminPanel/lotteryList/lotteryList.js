@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {toBoolean} from "uikit/src/js/util";
+import {getCookie} from "../../../helper/cookie";
 
 export default class LotteryList extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class LotteryList extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route':'activateLottery',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
                 'lottery_id': id
             })
         }).then(response => response.json())
@@ -31,7 +32,7 @@ export default class LotteryList extends Component {
                     const isActive = toBoolean(key[0].active)
                     return (
                         <div key={key[0].lotId}>
-                            <table className="table" key={`tableHead${Math.random()}`}>
+                            <table className="table">
                                 <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Lottery Id</th>
@@ -75,7 +76,7 @@ export default class LotteryList extends Component {
                                     <tbody>
                                     {key.map((present, index) => {
                                         return (
-                                            <tr key={`${present.name}${present.token}`}>
+                                            <tr key={`${present.name}${present.token}${index}`}>
                                                 <th scope="row">{index}</th>
                                                 <td><strong>{present.name}</strong></td>
                                                 <td>{present.number}</td>

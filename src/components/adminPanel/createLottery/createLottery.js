@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import CreateLotteryItem from "../createLotteryItem";
 import GenerateToken from "../generateToken";
 import {NavLink} from "react-router-dom";
+import {getCookie} from "../../../helper/cookie";
 
 export default class CreateLottery extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class CreateLottery extends Component {
     state = {
         lotteryDescription: '',
         countOfLots: '',
-        countOfBox: '',
+        countOfBox: 100,
         lotteryId: '',
         lotteryInputDate: '',
         isLotteryCreated: false,
@@ -23,7 +24,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'createLottery',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
                 'description': this.state.lotteryDescription,
                 'present_count': this.state.countOfLots,
                 'box_count': (this.state.countOfBox ? this.state.countOfBox : 100)
@@ -46,7 +47,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'createPresent',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
                 'lottery_id': this.state.lotteryId,
                 'presents': state
             })
@@ -70,7 +71,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'disActivateLottery',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
             })
         }).then(response => response.json())
             .then((res) => {
@@ -86,15 +87,25 @@ export default class CreateLottery extends Component {
     }
 
     onChangeCount = (event) => {
-        this.setState({
-            countOfLots: event.target.value
-        })
+        if (event.target.value.replace(/[^0-9]/g, "") > this.state.countOfBox) {
+            alert('Present count coudn\'t be more than count of box. Actual box count: ' + this.state.countOfBox)
+        } else {
+            this.setState({
+                countOfLots: event.target.value.replace(/[^0-9]/g, "")
+            })
+        }
     }
 
+
     onChangeCountBox = (event) => {
-        this.setState({
-            countOfBox: event.target.value
-        })
+        if (event.target.value.replace(/[^0-9]/g, "") > 100) {
+            alert('max box element 100')
+        } else {
+            this.setState({
+                countOfBox: event.target.value.replace(/[^0-9]/g, "")
+            })
+        }
+
     }
 
     onChangeDescription = (event) => {
@@ -119,7 +130,7 @@ export default class CreateLottery extends Component {
                                       rows="3"/>
                         </div>
                         <div className="form-group mb-1">
-                            <label htmlFor="exampleFormControlInput1 ml-3">Count of present</label>
+                            <label htmlFor="exampleFormControlInput1 ml-3" pattern="[0-9]*">Count of present</label>
                             <input type="text"
                                    className="form-control"
                                    onChange={this.onChangeCount}

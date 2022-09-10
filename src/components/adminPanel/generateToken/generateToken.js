@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {getCookie} from "../../../helper/cookie";
 export default class GenerateToken extends Component {
     state = {
         nick: '',
@@ -17,7 +18,7 @@ export default class GenerateToken extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route':'generateToken',
-                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
+                'session_id': getCookie('sessionId'),
                 'nick': this.state.nick
             })
         }).then(response => response.json())

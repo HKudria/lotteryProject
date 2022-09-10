@@ -100,15 +100,6 @@ export default class CreateLottery extends Component {
         })
     }
 
-    logout = () => {
-        fetch('http://localhost/mrBlackLotery/api/auth.php', {
-            crossDomain: true,
-            method: 'POST',
-            body: JSON.stringify({
-                'route': 'logout',
-            })
-        }).then(r => {})
-    }
 
     render() {
         return (

@@ -26,6 +26,9 @@ class Routing
 
     function adminRouting(): string|array
     {
+        if(!$this->authController->checkAuth()['auth']){
+           return ['message' => 'pizda'];
+        }
         return match ($this->data['route']) {
             'createLottery' => $this->lotteryController->createLottery($this->data['present_count'], $this->data['box_count'],
                 $this->data['description']),
@@ -42,7 +45,12 @@ class Routing
 
     function authRouting(): string|array
     {
-        return ["auth" => true];
+            return match ($this->data['route']) {
+                'authorize' => $this->authController->login($this->data['password']),
+                'checkAuth' => $this->authController->checkAuth(),
+                'logout' => $this->authController->logout(),
+                default => ["auth" => false],
+            };
     }
 
     function userRouting(): string|array

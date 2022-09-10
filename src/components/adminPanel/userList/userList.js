@@ -19,6 +19,7 @@ export default class UserList extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'userList',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
                 'dayLimit': this.state.dayLimit
             })
         }).then(response => response.json())

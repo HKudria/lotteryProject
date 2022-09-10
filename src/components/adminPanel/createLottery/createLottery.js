@@ -23,6 +23,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'createLottery',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
                 'description': this.state.lotteryDescription,
                 'present_count': this.state.countOfLots,
                 'box_count': (this.state.countOfBox ? this.state.countOfBox : 100)
@@ -45,6 +46,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'createPresent',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
                 'lottery_id': this.state.lotteryId,
                 'presents': state
             })
@@ -68,6 +70,7 @@ export default class CreateLottery extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'disActivateLottery',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
             })
         }).then(response => response.json())
             .then((res) => {
@@ -150,7 +153,7 @@ export default class CreateLottery extends Component {
                         </button>
                     </NavLink>
                     <button className="btn btn-primary uk-align-right mr-2"
-                            onClick={this.logout}> Logout
+                            onClick={this.props.logout}> Logout
                     </button>
                 </div>
                 {this.state.isModalToken ? <GenerateToken closeButton={this.showTokenModal}/> : ''}

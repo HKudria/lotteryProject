@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Login from "./login";
 import CreateLottery from "./createLottery";
 import LotteryList from "./lotteryList";
+import cookie from "react-cookie";
 
 export default class AdminPanel extends Component {
     state = {
@@ -21,6 +22,7 @@ export default class AdminPanel extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route': 'checkAuth',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
             })
         }).then(response => response.json())
             .then(res => {
@@ -47,19 +49,22 @@ export default class AdminPanel extends Component {
                     auth: res.auth
                 })
                 if (res.auth) {
+                    localStorage.setItem('sessionId', res.id)
                     this.updateComponent()
                 }
             })
     }
 
     logout = () => {
-        fetch('http://localhost/mrBlackLotery/api/auth.php', {
+        fetch('http://localhost/mrBlackLotery/api/login.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
                 'route': 'logout',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
             })
         }).then(r => {
+            localStorage.setItem('sessionId', null)
             this.setState({
                 auth: false
             })
@@ -71,7 +76,8 @@ export default class AdminPanel extends Component {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
-                'route': 'getAllList'
+                'route': 'getAllList',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
             })
         }).then(response => response.json())
             .then(res => {

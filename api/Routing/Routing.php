@@ -18,6 +18,11 @@ class Routing
     public function __construct(array|string|null $data)
     {
         $this->data = $data;
+        if(isset($this->data['session_id'])){
+            session_destroy();
+            session_id($this->data['session_id']);
+            session_start();
+        }
         $this->lotteryController = new LotteryController();
         $this->authController = new AuthController();
         $this->userTokenController = new UserTokenController();
@@ -27,7 +32,7 @@ class Routing
     function adminRouting(): string|array
     {
         if(!$this->authController->checkAuth()['auth']){
-           return ['message' => 'pizda'];
+           return ['message' => 'don\'t have permission'];
         }
         return match ($this->data['route']) {
             'createLottery' => $this->lotteryController->createLottery($this->data['present_count'], $this->data['box_count'],
@@ -48,7 +53,7 @@ class Routing
             return match ($this->data['route']) {
                 'authorize' => $this->authController->login($this->data['password']),
                 'checkAuth' => $this->authController->checkAuth(),
-                'logout' => $this->authController->logout(),
+                'logout' => $this->authController->logout($this->data['session_id']),
                 default => ["auth" => false],
             };
     }

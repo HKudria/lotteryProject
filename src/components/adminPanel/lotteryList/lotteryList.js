@@ -12,6 +12,7 @@ export default class LotteryList extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route':'activateLottery',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
                 'lottery_id': id
             })
         }).then(response => response.json())

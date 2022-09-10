@@ -17,6 +17,7 @@ export default class GenerateToken extends Component {
             method: 'POST',
             body: JSON.stringify({
                 'route':'generateToken',
+                'session_id': localStorage.getItem('sessionId')?localStorage.getItem('sessionId'):null,
                 'nick': this.state.nick
             })
         }).then(response => response.json())

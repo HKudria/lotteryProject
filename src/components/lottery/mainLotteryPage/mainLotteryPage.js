@@ -24,13 +24,13 @@ export default class MainLotteryPage extends Component {
             })
         }).then(response => response.json())
             .then(res => {
-                if (res.token) {
+                if (res.availablePresentCoun !== 0) {
                     this.setState({
                         availablePresentCount: res.availablePresentCount,
                         boxCount: res.boxCount,
                         lotteryToken: res.token
                     })
-                    this.selectListOfOpened()
+                    this.selectListOfOpened(res.token)
                 } else {
                     alert('We are so sorry, but actual all prize was won! But you can use this token again when we make new one :) Good luck!')
                     this.props.updateToken('');
@@ -38,13 +38,13 @@ export default class MainLotteryPage extends Component {
             })
     }
 
-    selectListOfOpened = () => {
+    selectListOfOpened = (token) => {
         fetch('/api/user.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
                 "route": "getOpenedBox",
-                "token": this.state.lotteryToken
+                "token": token
             })
         }).then(response => response.json())
             .then(res => {
@@ -66,7 +66,7 @@ export default class MainLotteryPage extends Component {
                 })
             }).then(response => response.json())
                 .then(res => {
-                    this.selectListOfOpened()
+                    this.selectListOfOpened(this.state.lotteryToken)
                     this.setState({
                         isTokenUsed: true
                     })
@@ -80,19 +80,19 @@ export default class MainLotteryPage extends Component {
         this.setState({
             boxes: []
         })
+        console.log(array)
         for (let i = 0; i < this.state.boxCount; i++) {
             let element = (<BoxComponent
                 key={i}
                 id={i}
                 isTokenUsed={this.state.isTokenUsed}
-                isOpen={array.includes(i)}
+                isOpen={array.includes(i.toString())}
                 check={this.checkPrize}
             />)
 
             this.setState(prevState => ({
                 boxes: [...prevState.boxes, element]
             }))
-
         }
     }
 

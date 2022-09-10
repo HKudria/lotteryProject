@@ -24,6 +24,7 @@ export default class GenerateToken extends Component {
         }).then(response => response.json())
             .then(res => {
                 this.setState({
+                    nick: '',
                     tokenGenerated: res.token
                 })
             })

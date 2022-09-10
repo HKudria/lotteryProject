@@ -11,7 +11,7 @@ class AuthController
         $settings = json_decode(file_get_contents('./config/setting.json', true));
         if ($password == $settings->password) {
             $_SESSION["auth"] = 'true';
-            return ["auth" => true];
+            return ["auth" => true, 'id' => session_id()];
         } else {
             return ["auth" => false, 'error' => 'Wrong password'];
         }

@@ -17,7 +17,6 @@ class TokenRepository
     {
         $token = Token::generateToken();
         $sql = "INSERT INTO user_token (token, nick) VALUES (:token,:nick)";
-
         return Connection::dbQuery($sql, ['token' => $token, 'nick' => $nick]) ? ['token' => $token] : false;
     }
 

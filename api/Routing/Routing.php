@@ -17,11 +17,11 @@ class Routing
     public function __construct(array|string|null $data)
     {
         $this->data = $data;
-        if(isset($this->data['session_id'])){
-            session_destroy();
-            session_id($this->data['session_id']);
-            session_start();
-        }
+//        if(isset($this->data['session_id'])){
+//            session_destroy();
+//            session_id($this->data['session_id']);
+//            session_start();
+//        }
         $this->lotteryController = new LotteryController();
         $this->authController = new AuthController();
         $this->userTokenController = new UserTokenController();

@@ -10,13 +10,13 @@ class LotteryPresentRepository
     function createPresent(array $lottery, array $presents): bool|array
     {
         $randArray = [];
-        while (count($randArray) !== $lottery['item_count']) {
+        while (count($randArray) !== (int)$lottery['item_count']) {
             $randomNumber = rand(0, $lottery['box_count']);
             if (!in_array($randomNumber, $randArray)) {
                 $randArray[] = $randomNumber;
             }
         }
-
+        var_dump($randArray);
         foreach ($presents as $index => $present) {
             $sql = "INSERT INTO lottery_present (lotterry_id, name, number) VALUES (:lottery_id,:name,:number)";
             Connection::dbQuery($sql, ['lottery_id' => $lottery['id'], 'name' => $present, 'number' =>

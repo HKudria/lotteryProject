@@ -11,7 +11,7 @@ use Repository\PrizeLogRepository;
 
 class LotteryController
 {
-    private readonly LotteryRepository $lotteryRepository;
+    private LotteryRepository $lotteryRepository;
     private LotteryPresentRepository $lotteryPresentRepository;
     private TokenRepository $tokenRepository;
 
@@ -47,7 +47,7 @@ class LotteryController
 
     function getAllLotteries(): string|array
     {
-        return $this->lotteryRepository->getAllLottery() ?: 'Getting lottery list error';
+        return $this->lotteryRepository->getAllLottery();
     }
 
     function setActiveLottery(int $id): array

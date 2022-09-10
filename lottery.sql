@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2022 at 07:28 PM
+-- Generation Time: Sep 10, 2022 at 09:41 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -33,7 +33,7 @@ CREATE TABLE `lottery` (
   `description` text DEFAULT NULL,
   `item_count` int(10) UNSIGNED NOT NULL,
   `box_count` int(11) NOT NULL DEFAULT 100,
-  `active` tinyint(1) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
   `token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -72,7 +72,7 @@ CREATE TABLE `prize_log` (
 CREATE TABLE `user_token` (
   `id` int(11) NOT NULL,
   `token` varchar(40) NOT NULL,
-  `is_used` tinyint(1) NOT NULL,
+  `is_used` tinyint(1) NOT NULL DEFAULT 0,
   `nick` varchar(40) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL

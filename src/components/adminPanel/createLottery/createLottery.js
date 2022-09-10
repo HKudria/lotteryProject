@@ -19,7 +19,7 @@ export default class CreateLottery extends Component {
         isModalToken: false,
     }
     onSubmitCreateLottery = () => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
@@ -42,7 +42,7 @@ export default class CreateLottery extends Component {
     }
 
     onSubmitLotteryPresent = (state) => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
@@ -66,7 +66,7 @@ export default class CreateLottery extends Component {
     }
 
     disLottery = () => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({

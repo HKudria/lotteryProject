@@ -16,7 +16,7 @@ export default class MainLotteryPage extends Component {
     }
 
     getActiveLottery() {
-        fetch('http://localhost/mrBlackLotery/api/user.php', {
+        fetch('/api/user.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
@@ -39,7 +39,7 @@ export default class MainLotteryPage extends Component {
     }
 
     selectListOfOpened = () => {
-        fetch('http://localhost/mrBlackLotery/api/user.php', {
+        fetch('/api/user.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
@@ -55,7 +55,7 @@ export default class MainLotteryPage extends Component {
 
     checkPrize = (id) => {
         if (!this.state.isTokenUsed) {
-            fetch('http://localhost/mrBlackLotery/api/user.php', {
+            fetch('/api/user.php', {
                 crossDomain: true,
                 method: 'POST',
                 body: JSON.stringify({

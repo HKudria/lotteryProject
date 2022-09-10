@@ -8,7 +8,7 @@ export default class LotteryList extends Component {
     }
 
     onSelectLottery = (id) => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({

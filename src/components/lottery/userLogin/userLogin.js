@@ -17,7 +17,7 @@ export default class UserLogin extends Component {
             isUsed: false,
             isWrongToken: false
         })
-        fetch('http://localhost/mrBlackLotery/api/user.php', {
+        fetch('/api/user.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
@@ -49,11 +49,11 @@ export default class UserLogin extends Component {
                     {this.state.isUsed?<h2 className="uk-modal-title uk-text-center">Token was used!</h2>:''}
                     <div className="uk-margin-top uk-text-lead">Enter your token:</div>
                     <input
-                        type="password"
+                        type="text"
                         name=""
                         id=""
                         className="uk-input uk-margin-top"
-                        placeholder="Password"
+                        placeholder="write token here"
                         value={this.state.token}
                         onChange={this.onPasswordChange}
                     />

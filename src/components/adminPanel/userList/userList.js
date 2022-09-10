@@ -15,7 +15,7 @@ export default class UserList extends Component {
 
 
     GetUserList = () => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({

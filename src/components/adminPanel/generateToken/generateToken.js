@@ -13,7 +13,7 @@ export default class GenerateToken extends Component {
     }
 
     generateToken = () => {
-        fetch('http://localhost/mrBlackLotery/api/admin.php', {
+        fetch('/api/admin.php', {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({

@@ -102,13 +102,13 @@ class LotteryController
                $getUser = $this->tokenRepository->getTokenByToken($authToken);
                $this->lotteryPresentRepository->setWinUser($getUser['id'],$prizeId);
                $prize = $checkWin['name'];
-               return ['message' => "Congratulation! You won: $prize"];
+               return ['message' => "Поздравялем! Вы вииграли: $prize"];
 
            } else {
-               return ['message' => 'Ohh.. You lucky next time!'];
+               return ['message' => 'Упс... Повезёт в следующий раз'];
            }
        }
-           return ['message' => 'Token was used early'];
+           return ['message' => 'Токен уже был использован'];
     }
 
     function getOpenedBox(string $token): array{

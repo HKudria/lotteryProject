@@ -24,7 +24,7 @@ export default class MainLotteryPage extends Component {
             })
         }).then(response => response.json())
             .then(res => {
-                if (res.availablePresentCoun !== 0) {
+                if (!res.error && res.availablePresentCount!=="0") {
                     this.setState({
                         availablePresentCount: res.availablePresentCount,
                         boxCount: res.boxCount,
@@ -32,7 +32,7 @@ export default class MainLotteryPage extends Component {
                     })
                     this.selectListOfOpened(res.token)
                 } else {
-                    alert('We are so sorry, but actual all prize was won! But you can use this token again when we make new one :) Good luck!')
+                    alert('Приносим свои извиненния, в данный момент все призы розыгранны. Ожидайте обновления!')
                     this.props.updateToken('');
                 }
             })
@@ -55,6 +55,9 @@ export default class MainLotteryPage extends Component {
 
     checkPrize = (id) => {
         if (!this.state.isTokenUsed) {
+            this.setState({
+                isTokenUsed: true
+            })
             fetch('/api/user.php', {
                 crossDomain: true,
                 method: 'POST',
@@ -101,8 +104,8 @@ export default class MainLotteryPage extends Component {
             <div className='bg'>
                 <div className='container'>
                     <div className='welcome'>
-                        <h2 className='text-center'>Welcome to <b>BlackCommunity</b> Lottery</h2>
-                        <h2 className='text-center'>Available prize to won: {this.state.availablePresentCount}</h2>
+                        <h2 className='text-center'>Welcome to <b>BlackCommunity&WizardShop</b> Lottery</h2>
+                        <h2 className='text-center'>Доступные призы к выиграшу: {this.state.availablePresentCount}</h2>
                     </div>
                     <div className='row justify-content-around'>
                         {this.state.boxes}

@@ -15,7 +15,7 @@ export default class BoxComponent extends Component {
                 }
             }
         } else {
-            alert('Woo... you had only one chance! See you next time!')
+            alert('Данный токен уже был использован!')
         }
     }
 

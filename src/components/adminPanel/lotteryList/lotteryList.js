@@ -12,7 +12,7 @@ export default class LotteryList extends Component {
             crossDomain: true,
             method: 'POST',
             body: JSON.stringify({
-                'route':'activateLottery',
+                'route': 'activateLottery',
                 'session_id': getCookie('sessionId'),
                 'lottery_id': id
             })
@@ -32,7 +32,7 @@ export default class LotteryList extends Component {
                     const isActive = toBoolean(key[0].active)
                     return (
                         <div key={key[0].lotId}>
-                            <table className="table">
+                            <table className="table table-sm table-responsive">
                                 <thead className="thead-dark">
                                 <tr>
                                     <th scope="col">Lottery Id</th>
@@ -49,7 +49,7 @@ export default class LotteryList extends Component {
                                     <td>{key[0].description}</td>
                                     <td>{key[0].presents}</td>
                                     <td>{key[0].boxes}</td>
-                                    <td>{isActive?'YES':'NO'}</td>
+                                    <td>{isActive ? 'YES' : 'NO'}</td>
                                     <td>
                                         <button className="btn btn-primary"
                                                 disabled={isActive}
@@ -60,36 +60,34 @@ export default class LotteryList extends Component {
                                 </tr>
                                 </tbody>
                             </table>
-                            <div className='small'>
-                                <table className="table table-responsive-sm tb">
-                                    <thead className="thead-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Present Description</th>
-                                        <th scope="col">Lucky Number</th>
-                                        <th scope="col">Is win</th>
-                                        <th scope="col">Token</th>
-                                        <th scope="col">Nickname</th>
-                                        <th scope="col">Date</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {key.map((present, index) => {
-                                        return (
-                                            <tr key={`${present.name}${present.token}${index}`}>
-                                                <th scope="row">{index}</th>
-                                                <td><strong>{present.name}</strong></td>
-                                                <td>{present.number}</td>
-                                                <td>{present.token ? 'Yes' : 'No'}</td>
-                                                <td>{present.token ? present.token : 'empty'}</td>
-                                                <td>{present.nick ? present.nick : 'empty'}</td>
-                                                <td>{present.updated_at ? present.updated_at : 'empty'}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table className="table table-sm table-responsive tb">
+                                <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Present Description</th>
+                                    <th scope="col">Lucky Number</th>
+                                    <th scope="col">Is win</th>
+                                    <th scope="col">Token</th>
+                                    <th scope="col">Nickname</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {key.map((present, index) => {
+                                    return (
+                                        <tr key={`${present.name}${present.token}${index}`}>
+                                            <th scope="row">{index}</th>
+                                            <td><strong>{present.name}</strong></td>
+                                            <td>{present.number}</td>
+                                            <td>{present.token ? 'Yes' : 'No'}</td>
+                                            <td>{present.token ? present.token : 'empty'}</td>
+                                            <td>{present.nick ? present.nick : 'empty'}</td>
+                                            <td>{present.updated_at ? present.updated_at : 'empty'}</td>
+                                        </tr>
+                                    )
+                                })}
+                                </tbody>
+                            </table>
                         </div>
                     )
                 })}

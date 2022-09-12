@@ -35,7 +35,7 @@ export default class GenerateToken extends Component {
             <div className="login-container">
                 <div className="login">
                     <h2 className="uk-modal-title uk-text-center">Generate token</h2>
-                    {this.state.tokenGenerated? <h2 className='text-center'>{this.state.tokenGenerated}</h2>:''}
+                    {this.state.tokenGenerated? <h4 className='text-center'>{this.state.tokenGenerated}</h4>:''}
                     <div className="uk-margin-top uk-text-lead">NickName:</div>
                     <input
                         type="text"

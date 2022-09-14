@@ -103,6 +103,14 @@ export default class MainLotteryPage extends Component {
         return (
             <div className='bg'>
                 <div className='container'>
+                    <div className='col-12 d-flex justify-content-center'>
+                        <div className='col-4'>
+                            <img src='black.png' alt='Black shop'/>
+                        </div>
+                        <div className='col-4'>
+                            <img src='wizard.png' alt='Black shop'/>
+                        </div>
+                    </div>
                     <div className='welcome'>
                         <h2 className='text-center'>Welcome to <b>BlackCommunity&WizardShop</b> Lottery</h2>
                         <h2 className='text-center'>Доступные призы к выиграшу: {this.state.availablePresentCount}</h2>

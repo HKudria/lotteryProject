@@ -44,7 +44,16 @@ export default class UserLogin extends Component {
     render() {
         return (
                 <div className="login-container">
+
                     <div className="login">
+                        <div className='col-12 d-flex justify-content-center'>
+                            <div className='col-6'>
+                                <img src='black.png' alt='Black shop'/>
+                            </div>
+                            <div className='col-6'>
+                                <img src='wizard.png' alt='Black shop'/>
+                            </div>
+                        </div>
                         <h2 className="uk-modal-title uk-text-center">Welcome to BlackCommunity & WizardShop
                             lottery!</h2>
                         {this.state.isWrongToken ? <h2 className="uk-modal-title uk-text-center">Неправильный токен!</h2> : ''}

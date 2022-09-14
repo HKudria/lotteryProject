@@ -32,7 +32,7 @@ export default class MainLotteryPage extends Component {
                     })
                     this.selectListOfOpened(res.token)
                 } else {
-                    alert('Приносим свои извиненния, в данный момент все призы розыгранны. Ожидайте обновления!')
+                    alert('Приносим свои извинения, в данный момент все призы разыграны. Ожидайте обновления! П.С Данный токен сохраняется и может быть использован в следующей лотерее!')
                     this.props.updateToken('');
                 }
             })
@@ -113,7 +113,7 @@ export default class MainLotteryPage extends Component {
                     </div>
                     <div className='welcome'>
                         <h2 className='text-center'>Welcome to <b>BlackCommunity&WizardShop</b> Lottery</h2>
-                        <h2 className='text-center'>Доступные призы к выиграшу: {this.state.availablePresentCount}</h2>
+                        <h2 className='text-center'>Доступные призы к выигрышу: {this.state.availablePresentCount}</h2>
                     </div>
                     <div className='row justify-content-around'>
                         {this.state.boxes}

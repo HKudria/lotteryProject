@@ -17,7 +17,7 @@ class PrizeLogController{
         return $this->prizeLogRepository->getOpenedBox($token);
     }
 
-    function setPrizeOpened(string $token, int $id): bool{
-        return $this->prizeLogRepository->setPrizeOpened($token, $id);
+    function setPrizeOpened(string $token, int $id, string $authToken=null): bool{
+        return $this->prizeLogRepository->setPrizeOpened($token, $id, $authToken);
     }
 }

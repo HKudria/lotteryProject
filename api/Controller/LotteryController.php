@@ -95,7 +95,7 @@ class LotteryController
        $prizeController = new PrizeLogController();
        if(isset($userToken->checkUserToken($authToken)['token'])){
            $userToken->makeTokenUsed($authToken);
-           $prizeController->setPrizeOpened($lotteryToken, $prizeId);
+           $prizeController->setPrizeOpened($lotteryToken, $prizeId, $authToken);
            $lottery = $this->lotteryRepository->selectLotteryByToken($lotteryToken);
            $checkWin = $this->lotteryPresentRepository->checkWin($lottery['id'],$prizeId);
            if ($checkWin){

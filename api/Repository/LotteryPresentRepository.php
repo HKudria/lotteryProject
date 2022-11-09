@@ -16,7 +16,6 @@ class LotteryPresentRepository
                 $randArray[] = $randomNumber;
             }
         }
-        var_dump($randArray);
         foreach ($presents as $index => $present) {
             $sql = "INSERT INTO lottery_present (lotterry_id, name, number) VALUES (:lottery_id,:name,:number)";
             Connection::dbQuery($sql, ['lottery_id' => $lottery['id'], 'name' => $present, 'number' =>

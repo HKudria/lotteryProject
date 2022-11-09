@@ -30,7 +30,7 @@ class Routing
     function adminRouting(): string|array
     {
         if(!$this->authController->checkAuth()['auth']){
-           return ['message' => 'don\'t have permission'];
+            return ['message' => 'don\'t have permission'];
         }
         return match ($this->data['route']) {
             'createLottery' => $this->lotteryController->createLottery($this->data['present_count'], $this->data['box_count'],
@@ -48,12 +48,12 @@ class Routing
 
     function authRouting(): string|array
     {
-            return match ($this->data['route']) {
-                'authorize' => $this->authController->login($this->data['password']),
-                'checkAuth' => $this->authController->checkAuth(),
-                'logout' => $this->authController->logout($this->data['session_id']),
-                default => ["auth" => false],
-            };
+        return match ($this->data['route']) {
+            'authorize' => $this->authController->login($this->data['password']),
+            'checkAuth' => $this->authController->checkAuth(),
+            'logout' => $this->authController->logout($this->data['session_id']),
+            default => ["auth" => false],
+        };
     }
 
     function userRouting(): string|array
@@ -61,7 +61,7 @@ class Routing
         return match ($this->data['route']) {
             'checkToken' => $this->userTokenController->checkUserToken($this->data['token']),
             'getActiveLottery' => $this->lotteryController->getActiveLottery(),
-            'getOpenedBox' => $this->lotteryController->getOpenedBox($this->data['token']),
+            'getOpenedBox' => $this->lotteryController->getOpenedBox($this->data['token']??null),
             'checkPrize' => $this->lotteryController->checkPrize($this->data['lottery_token'], $this->data['user_token'], $this->data['id']),
             default => 'Wrong request',
         };

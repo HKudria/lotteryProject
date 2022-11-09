@@ -7,7 +7,7 @@ use PDOStatement;
 class Connection
 {
 
-   static function dbInstance() : PDO{
+    static function dbInstance() : PDO{
         $dbParams = json_decode(file_get_contents('./config/setting.json', true));
         static $db;
         if($db === null){

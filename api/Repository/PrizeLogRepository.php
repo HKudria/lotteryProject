@@ -14,9 +14,9 @@ class PrizeLogRepository
         return $query->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    function setPrizeOpened(string $token, int $id) : bool{
-        $sql = "INSERT INTO prize_log (token, box_number) VALUE (:token, :id)";
-        return (bool)Connection::dbQuery($sql, ['token'=>$token, 'id' => $id]);
+    function setPrizeOpened(string $token, int $id, string $user_token=null) : bool{
+        $sql = "INSERT INTO prize_log (token, box_number, user_token) VALUE (:token, :id, :user_token)";
+        return (bool)Connection::dbQuery($sql, ['token'=>$token, 'id' => $id, 'user_token' => $user_token]);
     }
 
 }

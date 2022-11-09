@@ -1,0 +1,106 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uk-hr{
+  color: black;
+  border: 1px solid;
+}
+
+label {
+  margin-left: 5px;
+}
+
+button{
+  margin-right: 10px;
+}
+
+.tb{
+  font-size: 12px;
+  background-color: lightslategray;
+  margin-bottom: 2px !important;
+}
+
+.mw-300{
+  min-width: 350px;
+}
+
+.login-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 2;
+}
+
+.login {
+  width: 600px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.login-error {
+  display: block;
+  color: red;
+  margin-top: 10px;
+}
+
+.box {
+  min-width: 75px;
+  cursor: pointer;
+}
+
+.bg{
+  height: 100vh;
+  background-image: url("./../public/bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: auto;
+}
+
+.welcome {
+  background-color: rgba(255,255,255,0.3);
+}

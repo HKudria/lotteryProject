@@ -1,16 +1,27 @@
 import React, {Component} from "react";
 export default class Login extends Component {
-    state = {
-        pass: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            pass: ""
+        }
     }
 
-    onPasswordChange = (e) => {
+    onPasswordChange(e){
         this.setState({
             pass: e.target.value
         })
     }
 
     render() {
+        const {pass} = this.state;
+        const {login, loginShort, loginError} = this.props;
+        let renderError, renderShort;
+
+        loginShort ? renderShort = <span className="login-error">Password must be more than 5 symbols</span> : null;
+        loginError ? renderError = <span className="login-error">Password isn't correct</span> : null;
+
+
         return (
             <div className="login-container">
                 <div className="login">
@@ -22,13 +33,15 @@ export default class Login extends Component {
                         id=""
                         className="uk-input uk-margin-top"
                         placeholder="Password"
-                        value={this.state.pass}
-                        onChange={this.onPasswordChange}
+                        value={pass}
+                        onChange={(e) => this.onPasswordChange(e)}
                     />
+                    {renderShort}
+                    {renderError}
                     <button
                         className="uk-button uk-button-primary uk-margin-top"
                         type="button"
-                        onClick={() => this.props.login(this.state.pass)}
+                        onClick={() => login(pass)}
                     >Enter</button>
                 </div>
             </div>

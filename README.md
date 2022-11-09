@@ -4,7 +4,7 @@
 Main page - https://lotterystudymy.000webhostapp.com/ \
 For enter in lottery you shoud generate token in admin panel\
 Acces to admin panel - https://lotterystudymy.000webhostapp.com/admin \
-Password - pass123 \
+Password - pass123
 
 ### `npm start`
 
